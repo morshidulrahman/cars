@@ -1,24 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Authcontext } from "../Provider/AuthProvider";
 
 const Header = () => {
+  const { user, singout } = useContext(Authcontext);
+
+  const handleClick = () => {
+    singout()
+      .then()
+      .catch((e) => console.log(e));
+  };
+
   const navitems = (
     <>
       <li>
-        <a>Home</a>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <a>About</a>
+        <Link to="/">About</Link>
       </li>
-      <li>
-        <a>Services</a>
-      </li>
-      <li>
-        <a>Blog</a>
-      </li>
-      <li>
-        <a>Contact</a>
-      </li>
+      {user?.email ? (
+        <>
+          <li>
+            <Link to="/bookings">My booking</Link>
+          </li>
+          <li>
+            <a onClick={handleClick}>Log out</a>
+          </li>
+        </>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Services = () => {
   const [data, setdata] = useState([]);
 
   useEffect(() => {
-    fetch("services.json")
+    fetch("http://localhost:5000/services")
       .then((res) => res.json())
       .then((data) => setdata(data));
   });
@@ -32,7 +33,9 @@ const Services = () => {
               <h2 className="card-title">{data.title}</h2>
               <p>{data.price}</p>
               <div className="card-actions">
-                <button className="btn btn-primary">Buy Now</button>
+                <Link to={`/checkout/${data._id}`}>
+                  <button className="btn btn-primary">Book Now</button>
+                </Link>
               </div>
             </div>
           </div>
