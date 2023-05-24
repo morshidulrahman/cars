@@ -15,11 +15,12 @@ const Booking = () => {
   const handledelete = (id) => {
     const procced = confirm("Are you sure you want to delete");
     if (procced) {
-      fetch("", {
+      fetch(`http://localhost:5000/bookings/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           const reamainbookings = bookings.filter(
             (booking) => booking._id !== id
           );
