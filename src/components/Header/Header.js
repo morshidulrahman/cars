@@ -7,7 +7,7 @@ const Header = () => {
 
   const handleClick = () => {
     singout()
-      .then()
+      .then(() => {})
       .catch((e) => console.log(e));
   };
 

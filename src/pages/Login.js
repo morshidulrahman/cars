@@ -1,17 +1,26 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Authcontext } from "../components/Provider/AuthProvider";
+import SocailLogin from "./SocailLogin";
 
 const Login = () => {
   const { signin } = useContext(Authcontext);
 
+  // getting location whre i am staying
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const handlesubmit = (event) => {
     event.preventDefault();
     const form = event.target;
-    const email = form.email.value;
+    const emailfrom = form.email.value;
     const password = form.password.value;
 
-    signin(email, password).then((data) => console.log(data));
+    signin(emailfrom, password).then((result) => {
+      const user = result.user;
+      navigate(from, { replace: true });
+    });
   };
 
   return (
@@ -54,7 +63,7 @@ const Login = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">sign up</button>
+              <button className="btn btn-primary">Log in </button>
             </div>
             <p>
               You don't have an account ?{" "}
@@ -64,6 +73,7 @@ const Login = () => {
             </p>
           </div>
         </form>
+        <SocailLogin />
       </div>
     </div>
   );

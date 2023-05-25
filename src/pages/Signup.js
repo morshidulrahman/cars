@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Authcontext } from "../components/Provider/AuthProvider";
+import SocailLogin from "./SocailLogin";
 
 const Signup = () => {
   const { createUser } = useContext(Authcontext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handlesubmit = (event) => {
     event.preventDefault();
@@ -11,7 +15,10 @@ const Signup = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    createUser(email, password).then((data) => console.log(data));
+    createUser(email, password).then((data) => {
+      navigate(from, { replace: true });
+      console.log(data);
+    });
   };
 
   return (
@@ -64,6 +71,7 @@ const Signup = () => {
             </p>
           </div>
         </form>
+        <SocailLogin />
       </div>
     </div>
   );
